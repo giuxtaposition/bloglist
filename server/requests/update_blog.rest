@@ -1,0 +1,10 @@
+PUT http://localhost:3001/api/blogs/5a422a851b54a676234d17f7
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxpbHlldmFucyIsImlkIjoiNjBkMzhkNzAxOTgxYWRkY2Q3YWMyNGFmIiwiaWF0IjoxNjI0NDc3MDQ2LCJleHAiOjE2MjQ0ODA2NDZ9.VLdaB2sIqFbW-OerzMcGGc6T6NkxHKq8UN6To_WrFWY
+
+{
+    "title": "Potato Salad",
+    "author": "Crunchy",
+    "url": "www.potatosalad.com",
+    "likes": 6
+}
