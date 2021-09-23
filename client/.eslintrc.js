@@ -1,21 +1,21 @@
 module.exports = {
   env: {
-    commonjs: true,
+    browser: true,
     es6: true,
-    node: true,
-    jest: true,
+    'jest/globals': true,
     'cypress/globals': true,
   },
-  extends: 'eslint:recommended',
-  plugins: ['jest', 'cypress'],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-  },
+  extends: ['eslint:recommended', 'plugin:react/recommended'],
   parserOptions: {
-    ecmaVersion: 11,
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 2018,
+    sourceType: 'module',
   },
+  plugins: ['react', 'jest', 'cypress'],
   rules: {
+    indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'never'],
@@ -24,6 +24,16 @@ module.exports = {
     'object-curly-spacing': ['error', 'always'],
     'arrow-spacing': ['error', { before: true, after: true }],
     'no-console': 0,
+    'react/prop-types': 0,
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+  globals: {
+    window: true,
+    module: true,
   },
   root: true,
 }
