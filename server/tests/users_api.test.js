@@ -8,7 +8,7 @@ const api = supertest(app)
 const User = require('../models/user')
 
 beforeEach(async () => {
-  await User.deleteMany({})
+  await api.post('/api/testing/reset').expect(204)
 
   const passwordHash = await bcrypt.hash('secret', 10)
   const user = new User({ username: 'potato', name: 'potato', passwordHash })

@@ -8,9 +8,9 @@
     "dev": "webpack --mode development && NODE_ENV=development nodemon server/index.js",
     "start": "NODE_ENV=production node server/index.js",
     "build": "webpack --mode=production",
-    "test:server": "NODE_ENV=test jest ./server --verbose --runInBand",
+    "test:server": "NODE_ENV=test jest ./server --runInBand",
     "test:client": "jest ./client",
-    "start:test": "NODE_ENV=test nodemon server/index.js",
+    "start:test": "webpack --mode development && NODE_ENV=test nodemon server/index.js",
     "eslint": "eslint .",
     "cypress:open": "cypress open",
     "test:e2e": "cypress run"
