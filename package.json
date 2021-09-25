@@ -13,7 +13,8 @@
     "start:test": "webpack --mode development && NODE_ENV=test nodemon server/index.js",
     "eslint": "eslint .",
     "cypress:open": "cypress open",
-    "test:e2e": "cypress run"
+    "test:e2e": "cypress run",
+    "test": "yarn test:client && yarn test:server && yarn test:e2e"
   },
   "dependencies": {
     "axios": "^0.21.1",
