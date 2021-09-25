@@ -10,13 +10,11 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 
 var tokenForUser
-var userTest
 
 beforeAll(async () => {
-  await api.post('/api/testing/reset').expect(204)
-
+  await User.deleteMany({})
   const passwordForUser = await bcrypt.hash('ILikePotatoes', 10)
-  userTest = await new User({
+  const userTest = await new User({
     username: 'giuxtaposition',
     name: 'giuxtaposition',
     passwordHash: passwordForUser,
@@ -34,12 +32,12 @@ beforeAll(async () => {
   }
 
   tokenForUser = jwt.sign(userForToken, process.env.SECRET)
+})
 
-  const initialBlogs = await Blog.insertMany(
-    helper.initialBlogs.map(blog => ({ ...blog, user: userTest.id }))
-  )
-  userTest.blogs = initialBlogs
-  await userTest.save()
+beforeEach(async () => {
+  await Blog.deleteMany({})
+
+  await Promise.all(await Blog.insertMany(helper.initialBlogs))
 })
 
 describe('when there is initially some blogs saved', () => {
@@ -92,17 +90,17 @@ describe('Adding a new blog', () => {
 
   test('if number of likes is missing set to 0', async () => {
     const newBlog = {
-      title: 'I like tomatoes',
+      title: 'I like potatoes',
       author: 'Giulia Ye',
       url: 'https://www.giuxtaposition.tech',
-      user: userTest.id,
     }
-    const savedBlog = await api
+    await api
       .post('/api/blogs')
       .set('Authorization', `bearer ${tokenForUser}`)
       .send(newBlog)
       .expect(200 | 201)
-    expect(savedBlog.body.likes).toBe(0)
+    const updatedBlogs = await api.get('/api/blogs')
+    expect(updatedBlogs.body[helper.initialBlogs.length].likes).toBe(0)
   })
 
   test('title is required', async () => {
@@ -110,7 +108,6 @@ describe('Adding a new blog', () => {
       author: 'Giulia Ye',
       url: 'https://www.giuxtaposition.tech',
       likes: 69,
-      user: userTest.id,
     }
     await api
       .post('/api/blogs')
@@ -124,7 +121,6 @@ describe('Adding a new blog', () => {
       title: 'I like potatoes',
       url: 'https://www.giuxtaposition.tech',
       likes: 69,
-      user: userTest.id,
     }
     await api
       .post('/api/blogs')

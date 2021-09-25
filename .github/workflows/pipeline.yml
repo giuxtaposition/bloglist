@@ -27,11 +27,15 @@ jobs:
         run: yarn eslint
       - name: build
         run: yarn build
+      - name: test server
+        run: |
+          yarn start:test &
+          sleep 10 &&
+          curl http://localhost:${{ secrets.PORT }} &&
+          yarn test:server
       - name: test client
         run: yarn test:client
-      - name: test server and e2e
+      - name: test e2e
         uses: cypress-io/github-action@v2
         with:
-          command: yarn test:server && yarn test:e2e
-          start: yarn start:test
-          wait-on: http://localhost:${{ secrets.PORT }}
+          command: yarn test:e2e

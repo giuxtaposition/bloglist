@@ -9,4 +9,16 @@ testingRouter.post('/reset', async (request, response) => {
   response.status(204).end()
 })
 
+testingRouter.post('/reset/blogs', async (request, response) => {
+  await Blog.deleteMany({})
+
+  response.status(204).end()
+})
+
+testingRouter.post('/reset/users', async (request, response) => {
+  await User.deleteMany({})
+
+  response.status(204).end()
+})
+
 module.exports = testingRouter
