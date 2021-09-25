@@ -31,7 +31,7 @@ jobs:
         run: |
           yarn start:test &
           sleep 10 &&
-          curl http://localhost:${{ secrets.PORT }} &&
+          curl http://localhost:${{ secrets.PORT }}/api/health &&
           yarn test:server
       - name: test client
         run: yarn test:client
